@@ -1,60 +1,23 @@
-import React, { useState } from 'react';
-
-import * as XLSX from 'xlsx';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import { mapeamentoCETIC } from 'utils/mapping';
 
 function App() {
-  const teste = () => {
-    fetch('https://api.apispreadsheets.com/data/16554/').then(res => {
-      if(res.status === 200){
-        res.json().then(data => {
-          console.log(data);
-        }).catch(err => console.log('erro'));
-      } else {
-        console.log('veio nada')
-      }
-    }).catch(err => console.log('err'));
-  }
-  const readExcel = (file: any) => {
-    const promise = new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsArrayBuffer(file);
-      fileReader.onload = (e) => {
-        const bufferArray = e.target!.result;
-
-        const wb = XLSX.read(bufferArray, {type: "buffer"});
-        // console.log(wb.SheetNames)
-        let data;
-        for(const sheetName in wb.SheetNames){
-
-          const wsname = wb.SheetNames[sheetName];
-          const ws = wb.Sheets[wsname];
-          data = XLSX.utils.sheet_to_json(ws);
-          console.log(data);
-        }
-
-        // const wsname = wb.SheetNames[0];
-        // // console.log(wsname);
-
-        // const ws = wb.Sheets[wsname];
-
-        // const data = XLSX.utils.sheet_to_json(ws);
-        // console.log(data);
-
-        resolve(data);
-      };
-      fileReader.onerror = error => {
-        reject(error);
-      };
+  const [dataset, setDataset] = useState<Object | null>(null);
+  const getData = () => {
+    axios.get('http://localhost:5000/getAllData').then((response) => {
+      console.log(response.data);
+      setDataset(response.data);
     });
-  };
+  }
 
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div >
-      <input type="file" onChange={(e) =>{
-        const file = e.target.files![0];
-        readExcel(file);
-      }} />
-      <button onClick={()=>{teste()}}>aa iai</button>
+      <h1>olá lindões</h1>
+      <button>ir para escolha</button>
     </div>
   );
 }
