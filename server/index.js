@@ -6,6 +6,7 @@ const app = express();
 
 const path = require('path');
 const { capitalize } = require('lodash');
+const { collapseTextChangeRangesAcrossMultipleVersions } = require('typescript');
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
@@ -32,6 +33,7 @@ const sheetsPaths = {
 
 app.get('/getAllData', (req, res) => {
   let object = {};
+  let dataTest;
   for(let year in sheetsPaths){
     for(let path in sheetsPaths[year]){
       const school = sheetsPaths[year][path];
@@ -40,10 +42,15 @@ app.get('/getAllData', (req, res) => {
         const data = convertToJson(school[subPath]);
         const categoryName = schoolType+capitalize(subPath);
         object[categoryName] = data;
+        dataTest = data;
       }
     }
   }
-  res.send(object);
+  dataTest = dataTreatment(dataTest);
+
+
+
+  res.send(dataTest);
 });
 
 const convertToJson = (path) => {
@@ -55,10 +62,72 @@ const convertToJson = (path) => {
     const ws = wb.Sheets[wsname];
     data = XLSX.utils.sheet_to_json(ws);
 
-    const something = Object.keys(data[0]);
-    object[something[0]] = data;
+    const tableKey = Object.keys(data[0]);
+    object[tableKey[0].split(' ')[4]] = data;
   }
   return object;
+}
+
+const dataTreatment = (data) => {
+  // console.log(data);
+  let newData = {};
+  for(let table in data){
+    let dataValues = Object.values(data[table])
+    newData.title = Object.keys(dataValues[0])[0];
+    newData.details = Object.values(dataValues[0])[0];
+
+    
+    if(newData.title.includes('D2B') || newData.title.includes('A1A')){
+      newData = setCategory(Object.values(dataValues), newData);
+
+
+      newData = setQuantity(Object.values(dataValues), newData);
+
+
+    }
+    console.log(newData);
+  }
+
+
+  return data;
+}
+
+const setCategory = (data, newData) => {
+  let categories = {};
+  categories = data[1];
+  delete categories[newData.title];
+
+  newData.categories = {
+    positions: Object.keys(categories), //posição delas(nomes __EMPTY_1, etc)
+    names: Object.values(categories),//nome das categorias
+    subcategories: false,
+  }
+  // Em casos que possui subcategoria o valor no [2] ainda é string, mas em casos que não possui, já é os valores de total
+  let subcategories = data[2];
+  const subcatAnalisys = Object.values(subcategories)[1];
+  if(isNaN(subcatAnalisys)){
+    newData.subcategories = subcategories;
+    newData.categories.subcategories = true;
+  }
+  return newData;
+}
+
+const setQuantity = (data, newData) => {
+  let iterator = 2;
+  if(newData.categories.subcategories){
+    iterator = 3;
+  }
+
+  //TOTAL
+  console.log(data[iterator]);
+  const key = Object.values(data[iterator])[0];
+
+
+
+  console.log('=============');
+
+  return newData;
+  
 }
 
 app.listen(5000, () => {
