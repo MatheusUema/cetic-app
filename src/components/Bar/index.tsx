@@ -14,7 +14,7 @@ import { Bar } from 'react-chartjs-2';
 // }
 
 interface BarProps {
-    table: object;
+    table: any;
 }
 
 /**
@@ -38,21 +38,11 @@ export const BarChart = ({
     
 
     useEffect(() => {
-        const teste = Object.values(table);
-        console.log(teste)
-        const categories = Object.values(teste[1]);
-        categories.shift();
-        setCategories(categories);
-        console.log(categories)
-        datasetCreation(categories);
-        const variables = Object.values(teste[2]);
-        console.log(variables);
-        setTitle(Object.keys(teste[0])[0]);
-
-
-
-
-
+        console.log(table);
+        setCategories(table.categories.names);
+        setLabels(Object.keys(table.indicators['DEPENDÊNCIA ADMINISTRATIVA']))
+        datasetCreation(table.categories.names);
+        setTitle(table.title);
     }, [table]);
 
 

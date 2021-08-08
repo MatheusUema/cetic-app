@@ -41,16 +41,14 @@ app.get('/getAllData', (req, res) => {
       for(let subPath in school){
         const data = convertToJson(school[subPath]);
         const categoryName = schoolType+capitalize(subPath);
-        object[categoryName] = data;
-        dataTest = data;
+        // dataTest = dataTreatment(data);
+        
+        dataTest = dataTreatment(data);
+        object[categoryName] = dataTest;
       }
     }
   }
-  dataTest = dataTreatment(dataTest);
-
-
-
-  res.send(dataTest);
+  res.send(object);
 });
 
 const convertToJson = (path) => {
@@ -61,42 +59,33 @@ const convertToJson = (path) => {
     const wsname = wb.SheetNames[sheetName];
     const ws = wb.Sheets[wsname];
     data = XLSX.utils.sheet_to_json(ws);
-
     const tableKey = Object.keys(data[0]);
-    object[tableKey[0].split(' ')[4]] = data;
+    const tableName = tableKey[0].split(' ')[4];
+    object[tableName] = data;
   }
   return object;
 }
 
 const dataTreatment = (data) => {
-  // console.log(data);
-  let newData = {};
+  let treatedData = {};
   for(let table in data){
+    let newData = {};
     let dataValues = Object.values(data[table])
     newData.title = Object.keys(dataValues[0])[0];
     newData.details = Object.values(dataValues[0])[0];
 
-    
-    if(newData.title.includes('D2B') || newData.title.includes('A1A')){
-      newData = setCategory(Object.values(dataValues), newData);
-
-
-      newData = setQuantity(Object.values(dataValues), newData);
-
-
-    }
-    console.log(newData);
+    newData = setCategory(Object.values(dataValues), newData);
+    newData = setQuantity(Object.values(dataValues), newData);
+    treatedData[table] = newData;
   }
 
-
-  return data;
+  return treatedData;
 }
 
 const setCategory = (data, newData) => {
   let categories = {};
   categories = data[1];
   delete categories[newData.title];
-
   newData.categories = {
     positions: Object.keys(categories), //posição delas(nomes __EMPTY_1, etc)
     names: Object.values(categories),//nome das categorias
@@ -113,19 +102,140 @@ const setCategory = (data, newData) => {
 }
 
 const setQuantity = (data, newData) => {
+  const removeAccent = str => {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+  }
+
+  if(newData.title.includes('A1A')){
+    console.log(newData);
+  }
+
+  const categories = newData.categories.names;
+  const positions = newData.categories.positions;
+  let subcategories;
+
   let iterator = 2;
   if(newData.categories.subcategories){
     iterator = 3;
+    subcategories = newData.subcategories;
   }
 
   //TOTAL
-  console.log(data[iterator]);
-  const key = Object.values(data[iterator])[0];
+  const majorIndicators = [
+    'TOTAL',
+    'SEXO',
+    'RENDA FAMILIAR',
+    'FAIXA ETÁRIA',
+    'RENDA PESSOAL',
+    'REGIÃO',
+    'DEPENDÊNCIA ADMINISTRATIVA',
+    'SÉRIE',
+    'DISCIPLINA'
+  ]
+  
+  let auxIndicator;
+  let indicators = {};
+  for(let i = iterator; i < data.length; i++){
+    let indicator = Object.values(data[i])[0];
+    let treatedData = data[i];
 
+    if(i === data.length - 1){
+      indicators.FONTE = indicator;
+      break;
+    }
 
+    if(i === iterator){ //quantidade TOTAL
+      delete treatedData[Object.keys(data[i])[0]];
+      indicators[indicator] = {};
+      
+      if(newData.categories.subcategories) {
+        let i = -1;
+        for(let key in treatedData){
+          if(treatedData[key] === '-'){
+            treatedData[key] = 0;
+          }
 
-  console.log('=============');
+          if(positions.includes(key)){
+            i++;
+            indicators[indicator][categories[i]] = {};
+          }
+          
+          indicators[indicator][categories[i]][subcategories[key]] = treatedData[key];
+        }
+      } else {
+        let j = 0;
+        for(let key in treatedData) {
+          if(treatedData[key] === '-'){
+            treatedData[key] = 0;
+          }
+          indicators[indicator][categories[j]] = treatedData[key];
+          j++;
+        }
+      }
+      // indicators[indicator] = treatedData;
+    } else if(majorIndicators.indexOf(indicator) !== -1){ //demais tipos de indicadores, mas com algum major indicator
+      auxIndicator = indicator;
+      indicator = Object.values(data[i])[1];
+      delete treatedData[Object.keys(data[i])[0]];
+      delete treatedData[Object.keys(data[i+1])[0]];
 
+      indicators[auxIndicator] = {};
+      // indicators[auxIndicator][indicator] = treatedData;
+      indicators[auxIndicator][indicator] = {};
+      if(newData.categories.subcategories) {
+        let i = -1;
+        
+        for(let key in subcategories){
+          if(positions.includes(key)){
+            i++;
+            indicators[auxIndicator][indicator][categories[i]] = {};
+          } 
+          if(treatedData[key] === '-'){
+            treatedData[key] = 0;
+          }
+          indicators[auxIndicator][indicator][categories[i]][subcategories[key]] = treatedData[key];
+
+        }
+      } else {
+        for(let j = 0; j < positions.length; j++){
+          if(treatedData[positions[j]] === '-'){
+            treatedData[positions[j]] = 0;
+          }
+          indicators[auxIndicator][indicator][categories[j]] = treatedData[positions[j]];
+        }
+      }
+      
+
+    } else { //demais tipos de indicadores mas sem um major indicator
+      delete treatedData[Object.keys(data[i])[0]];
+      // indicators[auxIndicator][indicator] = treatedData;
+      indicators[auxIndicator][indicator] = {};
+      if(newData.categories.subcategories) {
+        let i = -1;
+        for(let key in subcategories){
+          if(positions.includes(key)){
+            i++;
+            indicators[auxIndicator][indicator][categories[i]] = {};
+          } 
+          if(treatedData[key] === '-'){
+            treatedData[key] = 0;
+          }
+          indicators[auxIndicator][indicator][categories[i]][subcategories[key]] = treatedData[key];
+
+        }
+      } else {
+        for(let j = 0; j < positions.length; j++){
+          if(treatedData[positions[j]] === '-'){
+            treatedData[positions[j]] = 0;
+          }
+          indicators[auxIndicator][indicator][categories[j]] = treatedData[positions[j]];
+        }
+      }
+    }
+    
+  }
+
+  newData.indicators = indicators;
   return newData;
   
 }
