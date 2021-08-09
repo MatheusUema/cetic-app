@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import { mapeamentoCETIC, findTable } from 'utils/mapping';
-import { Bar } from 'react-chartjs-2';
+import { mapeamentoCETIC } from 'utils/mapping';
 import { BarChart } from './components/Bar';
 
 function App() {

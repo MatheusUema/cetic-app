@@ -6,7 +6,6 @@ const app = express();
 
 const path = require('path');
 const { capitalize } = require('lodash');
-const { collapseTextChangeRangesAcrossMultipleVersions } = require('typescript');
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
