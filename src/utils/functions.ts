@@ -8,16 +8,25 @@ interface quantityObject {
     [key: string]: number;
 }
 
-export const dataPercentage = (indicator:any, category:string, percentageString:string):Array<number> => {
+export const dataPercentage = (indicator:any, category:string, percentageString:string = ''):Array<number> => {
     //Por enquanto criada para uma tabela com subcategorias para retornar apenas a porcentagem de sim
     let data = [];
     let quantityData: quantityObject = {}
     for(const key in indicator){
         let total = 0;
         let comparative = 0;
-        const categoryValues = indicator[key][category];
+        let categoryValues = indicator[key];
+        let selectedCategory = category;
+
+        if(!percentageString){
+            categoryValues = indicator[key];
+            selectedCategory = category;
+        } else {
+            categoryValues = indicator[key][category];
+            selectedCategory = percentageString;
+        }
         for(const value in categoryValues){
-            if(value === percentageString) comparative = categoryValues[value];
+            if(value === selectedCategory) comparative = categoryValues[value];
             total += categoryValues[value];
         }
         const value = parseFloat((100*comparative/total).toFixed(2))
@@ -25,6 +34,7 @@ export const dataPercentage = (indicator:any, category:string, percentageString:
         quantityData[key] = parseFloat((100*comparative/total).toFixed(2));
     }
     return data;
+    // return [2,2,4,2,5,2,4,2]
 }
 
 ;
@@ -37,4 +47,14 @@ export const uniqueVariables = (variables:Array<string>):Array<string> => {
         }
     }
     return uniqueArray;
+}
+
+export const selectIndicators = (chosenIndicators:Array<string>):Array<string> => {
+    let newIndicators = [];
+    for(let i = 0; i < chosenIndicators.length; i++){
+        if(chosenIndicators[i] !== 'TOTAL' && chosenIndicators[i] !== 'FONTE'){
+            newIndicators.push(chosenIndicators[i]);
+        }
+    }
+    return newIndicators;
 }

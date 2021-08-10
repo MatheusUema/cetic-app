@@ -1,11 +1,25 @@
 export const mapeamentoCETIC = {
     escolha: [
-        'escolasUrbanasProfessores_G2B1',
-        'escolasUrbanasProfessores_G1',
-        'escolasUrbanasProfessores_G2',
-        'escolasUrbanasProfessores_G8A',
-        'escolasUrbanasCoordenadores_C7A',
-        'escolasUrbanasCoordenadores_C3'
+        {
+            name: 'escolasUrbanasProfessores_G2B1',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasProfessores_G2',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasProfessores_G8A',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasCoordenadores_C7A',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasCoordenadores_C3',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        }
     ]
 }
 

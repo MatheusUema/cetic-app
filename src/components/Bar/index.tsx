@@ -2,11 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 // import { Container, ButtonTitle, LoadingIndicator } from './styles';
 import { Bar } from 'react-chartjs-2';
-import { capitalize, dataPercentage, uniqueVariables } from '../../utils/functions';
+import { capitalize, dataPercentage, uniqueVariables, selectIndicators } from '../../utils/functions';
 import { colors } from '../../utils/colors';
 
 interface BarProps {
     table: any;
+    chosenIndicators: Array<string>;
 }
 
 /**
@@ -20,19 +21,21 @@ interface BarProps {
  */
 
 export const BarChart = ({
-//   children, onClick, display = 'round', loading, color, fontColor, disabled, className, ...rest
-    table
+    table, chosenIndicators
      }: BarProps): JSX.Element => {
     const [dataset, setDataset] = useState<any | null>(null);
     const [labels, setLabels] = useState<Array<string> | null>(null);
-    const [variable, setVariable] = useState<string>((uniqueVariables(Object.values(table.subcategories))[0]));
+    const [variable, setVariable] = useState<string>(table.subcategories ? (uniqueVariables(Object.values(table.subcategories))[0]) : '');
+    const [stacked, setStacked] = useState<boolean>(!table.categories.subcategories);
+    const [buttonIndicators, setButtonIndicators] = useState<Array<string>>(['']);
+    const [shownIndicator, setShownIndicator] = useState<String>('REGIÃO');
 
     const datasetCreation = useCallback((indicator:any) => {
       let dataset = [];
       let i = 0;
       setLabels(Object.keys(indicator));
       for(let category in table.categories.names){
-        const data = dataPercentage(indicator, table.categories.names[category], variable);
+        const data = table.categories.subcategories ? dataPercentage(indicator, table.categories.names[category], variable) : dataPercentage(indicator, table.categories.names[category]);
         const obj = {
           label: table.categories.names[category],
           data: data,
@@ -49,11 +52,13 @@ export const BarChart = ({
     }, [variable, table])
     
     useEffect(() => {
-        datasetCreation(table.indicators['REGIÃO']);
-    }, [datasetCreation, table]);
+        datasetCreation(table.indicators[shownIndicator as keyof typeof table.indicators]);
+        setButtonIndicators(chosenIndicators[0] ? chosenIndicators : selectIndicators(Object.keys(table.indicators)));
+    }, [shownIndicator, datasetCreation, table, chosenIndicators]);
 
     const handleClick = (indicator:string) => {
-      datasetCreation(table.indicators[indicator]);
+      setShownIndicator(indicator);
+      // datasetCreation(table.indicators[indicator]);
     }
 
     const footer = (tooltipItems:any) => {
@@ -74,13 +79,17 @@ export const BarChart = ({
         width={100}
         height={50}
         options={{
-          mainAspectRatio: false,
+          maintainAspectRatio: true,
           responsive: true,
           scales: {
             y: {
               beginAtZero: true,
-              suggestedMax: 100
+              max: 100,
+              stacked: stacked,
             },
+            x: {
+              stacked: stacked,
+            }
           },
           plugins: {
             title: {
@@ -107,20 +116,21 @@ export const BarChart = ({
         datasets: dataset,
         }}
       />
-      {Object.keys(table.indicators).map((indicator: string, index:number) => {
+      {Object.keys(table.indicators).map((indicator: string) => {
         return (
           <>
-          {(indicator !== 'FONTE' && indicator !== 'TOTAL') && 
-          <button id={`${index}_${indicator}`} onClick={() => {
+          {buttonIndicators.includes(indicator) && 
+          <button key={indicator} onClick={() => {
             handleClick(indicator);
           }}>
-            {capitalize(indicator)}
+           {capitalize(indicator)}
          </button> }
           </>
         )
       })
       }
-      <div>
+      {table.categories.subcategories &&
+        <div>
         {uniqueVariables(Object.values(table.subcategories)).map((variable:string) => {
           return (
             <button key={variable} onClick={() => {setVariable(variable)}}>
@@ -130,6 +140,8 @@ export const BarChart = ({
         })
         }
       </div>
+      }
+      
       
       </>
   );
