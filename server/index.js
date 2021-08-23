@@ -10,9 +10,6 @@ const { capitalize } = require('lodash');
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 app.use(cors())
-// app.use((req, res, next) => {
-//     res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-// });
 
 const sheetsPaths = {
   2019: {
@@ -27,13 +24,40 @@ const sheetsPaths = {
       escolas: '../public/tic_educacao_2019/5. Tabelas de resultados/1. Português/2. Escolas rurais/1. Escolas/tic_educacao_2019_escolas_rurais_tabela_total_v1.0.xlsx',
       diretores: '../public/tic_educacao_2019/5. Tabelas de resultados/1. Português/2. Escolas rurais/2. Diretores e responsáveis/tic_educacao_2019_escolas_rurais_responsaveis_tabela_total_v1.0.xlsx',
     }
+  },
+  2018: {
+    escolasUrbanas: {
+      alunos: '../public/tic_educacao_2018_microdados/5. Tabelas de resultados/1. Escolas urbanas/1. Alunos/tic_educacao_2018_escolas_urbanas_alunos_tabela_total_v1.0.xlsx',
+      coordenadores: '../public/tic_educacao_2018_microdados/5. Tabelas de resultados/1. Escolas urbanas/2. Coordenadores/tic_educacao_2018_escolas_urbanas_coordenadores_total_v1.0.xlsx',
+      diretores: '../public/tic_educacao_2018_microdados/5. Tabelas de resultados/1. Escolas urbanas/3. Diretores/tic_educacao_2018_escolas_urbanas_diretores_tabela_total_v1.0.xlsx',
+      professores: '../public/tic_educacao_2018_microdados/5. Tabelas de resultados/1. Escolas urbanas/4. Professores/tic_educacao_2018_escolas_urbanas_professores_tabela_total_v1.0.xlsx',
+      escolas: '../public/tic_educacao_2018_microdados/5. Tabelas de resultados/1. Escolas urbanas/5. Escolas/tic_educacao_2018_escolas_urbanas_tabela_total_v1.0.xlsx'
+    },
+    escolasRurais: {
+      escolas: '../public/tic_educacao_2018_microdados/5. Tabelas de resultados/2. Escolas rurais/1. Escolas/tic_educacao_2018_escolas_rurais_tabela_total_v1.0.xlsx',
+      diretores: '../public/tic_educacao_2018_microdados/5. Tabelas de resultados/2. Escolas rurais/2. Diretores e responsáveis/tic_educacao_2018_escolas_rurais_responsaveis_tabela_total_v1.0.xlsx',
+    }
+  },
+  2017: {
+    escolasUrbanas: {
+      alunos: '../public/tabelas_tic_educacao_2017_v1/versao_1/escolas_urbanas/escolas_urbanas_alunos/tic_educacao_urbanas_alunos_2017_tabela_total_v1.xlsx',
+      coordenadores: '../public/tabelas_tic_educacao_2017_v1/versao_1/escolas_urbanas/escolas_urbanas_coordenadores_pedagogicos/tic_educacao_urbanas_coordenadores_2017_tabela_total_v1.xlsx',
+      diretores: '../public/tabelas_tic_educacao_2017_v1/versao_1/escolas_urbanas/escolas_urbanas_diretores/tic_educacao_urbanas_diretores_2017_tabela_total_v1.xlsx',
+      professores: '../public/tabelas_tic_educacao_2017_v1/versao_1/escolas_urbanas/escolas_urbanas_professores/tic_educacao_urbanas_professores_2017_tabela_total_v1.xlsx',
+      escolas: '../public/tabelas_tic_educacao_2017_v1/versao_1/escolas_urbanas/escolas_urbanas/tic_educacao_escolas_urbanas_2017_tabela_total_v1.xlsx'
+    },
+    escolasRurais: {
+      escolas: '../public/tabelas_tic_educacao_2017_v1/versao_1/escolas_rurais/escolas_rurais/tic_educacao_escolas_rurais_2017_tabela_total_v1.0.xlsx',
+      diretores: '../public/tabelas_tic_educacao_2017_v1/versao_1/escolas_rurais/escolas_rurais_responsaveis/tic_educacao_escolas_rurais_responsaveis_2017_tabela_total_v1.xlsx',
+    }
   }
 }
 
 app.get('/getAllData', (req, res) => {
-  let object = {};
+  let allData = {};
   let dataTest;
   for(let year in sheetsPaths){
+    let object = {};
     for(let path in sheetsPaths[year]){
       const school = sheetsPaths[year][path];
       const schoolType = path;
@@ -46,8 +70,11 @@ app.get('/getAllData', (req, res) => {
         object[categoryName] = dataTest;
       }
     }
+    allData[year] = object; //Data de todos anos
+    //Por enquanto vamos enviar apenas o object do ano de 2019
   }
-  res.send(object);
+  // res.send(object);
+  res.send(allData);
 });
 
 const convertToJson = (path) => {
@@ -62,6 +89,7 @@ const convertToJson = (path) => {
     const tableName = tableKey[0].split(' ')[4];
     object[tableName] = data;
   }
+  console.log(object);
   return object;
 }
 
@@ -101,14 +129,6 @@ const setCategory = (data, newData) => {
 }
 
 const setQuantity = (data, newData) => {
-  const removeAccent = str => {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-  }
-
-  if(newData.title.includes('A1A')){
-    console.log(newData);
-  }
-
   const categories = newData.categories.names;
   const positions = newData.categories.positions;
   let subcategories;

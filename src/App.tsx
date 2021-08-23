@@ -5,50 +5,67 @@ import { BarChart } from './components/Bar';
 
 function App() {
   const [dataset, setDataset] = useState<Object | null>(null);
-  const [table, setTable] = useState<Object | null>(null);
   const [category, setCategory] = useState<Object | null>(null);
-  const [chosenIndicators, setChosenIndicators] = useState<Array<string>>(['']);
-  const getData = () => {
-    axios.get('http://localhost:5000/getAllData').then((response) => {
-      console.log(response.data);
-      setDataset(response.data);
-    });
-  }
+  const [year, setYear] = useState<Number>(2019);
+  const [tableset, setTableset] = useState<String | null>(null);
+  const [response, setResponse] = useState<Object | null>(null);
 
   useEffect(() => {
-    getData();
-  }, []);
+    if(response){
+      setDataset(response[year as keyof typeof dataset]);
+      if(tableset) {
+        handleClick(mapeamentoCETIC[tableset as keyof typeof mapeamentoCETIC]);
+      }
+    } else {
+      axios.get('http://localhost:5000/getAllData').then((response) => {
+        console.log(response.data);
+        setDataset(response.data[year as keyof typeof dataset]);
+        setResponse(response.data);
+      });
+    }
+  }, [year]);
 
-  const handleClick = (selectedTables:Array<typeof mapeamentoCETIC.escolha[0]>) => {
+  const clearTables = () => {
+    setCategory(null);
+  }
+
+  const  handleClick = async (selectedTables:Array<typeof mapeamentoCETIC['Eixo Infraestrutura'][0]>) => {
+    await clearTables();
     for(const key in selectedTables){
       let activeTables = {};
       const position = selectedTables[key]!.name.split('_');
       const chosenIndicators = selectedTables[key].indicators;
       const thisTable = dataset![position[0] as keyof typeof dataset][position[1]];
-      activeTables = {
-        table: thisTable,
-        indicators: chosenIndicators
+      if(!thisTable){
+        console.log('Não possuímos a tabela '+position[1]);
+      } else {
+        activeTables = {
+          table: thisTable,
+          indicators: chosenIndicators
+        }
+        // eslint-disable-next-line no-loop-func
+        setCategory(category => ({
+          ...category,
+          [key]: activeTables
+        }));
       }
-      // eslint-disable-next-line no-loop-func
-      setCategory(category => ({
-        ...category,
-        [key]: activeTables
-      }))
     }
   }
   return (
     <div >
       <h1>Mapeamento CETIC</h1>
-      <button onClick={() => {
-        const teste = mapeamentoCETIC.escolha[0];
-        let pos = teste.name.split('_');
-        const chosenIndicators = teste.indicators;
-
-        const table = dataset![pos[0] as keyof typeof dataset][pos[1]];
-        setTable(table);
-        setChosenIndicators(chosenIndicators);
-        handleClick(mapeamentoCETIC.escolha);
-      }}>Escolha</button>
+      <button onClick={() => {setYear(2017)}}>2017</button>
+      <button onClick={() => {setYear(2018)}}>2018</button>
+      <button onClick={() => {setYear(2019)}}>2019</button>
+      <br/>
+      {Object.keys(mapeamentoCETIC).map((type: any) => (
+        <button onClick={() => {
+          setTableset(type);
+          handleClick(mapeamentoCETIC[type as keyof typeof mapeamentoCETIC]);
+        }}>
+          {type}
+        </button>
+      ))}
       {category && 
       Object.keys(category).map((key: string) => {
         const selected = category[key as keyof typeof category];

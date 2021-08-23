@@ -28,6 +28,18 @@ export const dataPercentage = (indicator:any, category:string, percentageString:
         for(const value in categoryValues){
             if(value === selectedCategory) comparative = categoryValues[value];
             total += categoryValues[value];
+
+            if(Object.keys(categoryValues).length === 1){
+                const firstKey =  Object.keys(indicator[key])[0];
+                const comparativeObject = indicator[key][firstKey];
+                total = 0;
+                // console.log(indicator[key][firstKey])
+                for(let keys in comparativeObject){
+                    total += comparativeObject[keys];
+                    // console.log(comparativeObject[keys])
+                }
+                // console.log(total);
+            }
         }
         const value = parseFloat((100*comparative/total).toFixed(2))
         data.push(value);

@@ -98,6 +98,7 @@ export const BarChart = ({
             },
             legend: {
               position: 'top',
+              align: 'start',
             },
             subtitle: {
               display: true,
