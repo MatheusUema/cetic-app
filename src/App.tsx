@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { mapeamentoCETIC } from 'utils/mapping';
 import { BarChart } from './components/Bar';
+import { Container } from './global/styles';
 
 function App() {
   const [dataset, setDataset] = useState<Object | null>(null);
@@ -13,6 +14,7 @@ function App() {
   useEffect(() => {
     if(response){
       setDataset(response[year as keyof typeof dataset]);
+      console.log('mudando para ano '+ year);
       if(tableset) {
         handleClick(mapeamentoCETIC[tableset as keyof typeof mapeamentoCETIC]);
       }
@@ -53,30 +55,34 @@ function App() {
   }
   return (
     <div >
-      <h1>Mapeamento CETIC</h1>
-      <button onClick={() => {setYear(2017)}}>2017</button>
-      <button onClick={() => {setYear(2018)}}>2018</button>
-      <button onClick={() => {setYear(2019)}}>2019</button>
-      <br/>
-      {Object.keys(mapeamentoCETIC).map((type: any) => (
+      <Container>
+        <h1>Mapeamento CETIC</h1>
+        <button onClick={() => {setYear(2017)}}>2017</button>
+        <button onClick={() => {setYear(2018)}}>2018</button>
+        <button onClick={() => {setYear(2019)}}>2019</button>
+        <br/>
+        {Object.keys(mapeamentoCETIC).map((type: any) => (
         <button onClick={() => {
           setTableset(type);
           handleClick(mapeamentoCETIC[type as keyof typeof mapeamentoCETIC]);
         }}>
           {type}
         </button>
-      ))}
-      {category && 
-      Object.keys(category).map((key: string) => {
-        const selected = category[key as keyof typeof category];
-        const selectedKeys = Object.keys(selected)
-        const table = selected[selectedKeys[0] as keyof typeof selected]
-        const chosenIndicators = selected[selectedKeys[1] as keyof typeof selected]
-        return (
-          <BarChart table={table} chosenIndicators={chosenIndicators} />
-        )
-      })
-      }
+        ))}
+        {category && 
+        Object.keys(category).map((key: string) => {
+          const selected = category[key as keyof typeof category];
+          const selectedKeys = Object.keys(selected)
+          const table = selected[selectedKeys[0] as keyof typeof selected]
+          const chosenIndicators = selected[selectedKeys[1] as keyof typeof selected]
+          return (
+            <BarChart table={table} chosenIndicators={chosenIndicators} />
+          )
+        })
+        }
+      </Container>
+      
+     
     </div>
   );
 }

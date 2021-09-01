@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
 // import { Container, ButtonTitle, LoadingIndicator } from './styles';
 import { Bar } from 'react-chartjs-2';
+import { Title, Container, DataContainer, DataOrganizer } from './styles';
 import { capitalize, dataPercentage, uniqueVariables, selectIndicators } from '../../utils/functions';
 import { colors } from '../../utils/colors';
 
@@ -10,15 +10,6 @@ interface BarProps {
     chosenIndicators: Array<string>;
 }
 
-/**
- * Principais botões
- *  - 'title': Título
- *  - 'display': Tipo do botão utilizado
- *  - 'onPress': Função realizada ao pressionar o botão
- *  - 'loading': Altera o texto para a animação de carregamento
- *  - 'color': Cor de fundo
- *  - 'fontColor': Cor da fonte do título do botão
- */
 
 export const BarChart = ({
     table, chosenIndicators
@@ -73,77 +64,83 @@ export const BarChart = ({
       return `Maior porcentagem em ${maxLabel}`;
     };
 
-    return (
-      <>
-      <Bar
-        width={100}
-        height={50}
-        options={{
-          maintainAspectRatio: true,
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-              max: 100,
-              stacked: stacked,
-            },
-            x: {
-              stacked: stacked,
+  return (
+    <>
+      <Container>
+        <Title>{table.title}</Title>
+        <DataContainer>
+          <Bar
+            options={{
+              maintainAspectRatio: true,
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 100,
+                  stacked: stacked,
+                },
+                x: {
+                  stacked: stacked,
+                }
+              },
+              plugins: {
+                legend: {
+                  position: 'top',
+                  align: 'start',
+                },
+                subtitle: {
+                  display: true,
+                  position: 'bottom',
+                  text: 'gráficos dispostos em porcentagem (%)'
+                },
+                tooltip: {
+                  callbacks: {
+                    footer: footer,
+                  }
+                }
+              },
+            }}
+            data={{
+            labels: labels,
+            datasets: dataset,
+            }}
+          />
+          <DataOrganizer>
+            <p>Visualizar por:</p>
+            {Object.keys(table.indicators).map((indicator: string) => {
+              return (
+                <>
+                {buttonIndicators.includes(indicator) && 
+                <button key={indicator} onClick={() => {
+                  handleClick(indicator);
+                }}>
+                  {capitalize(indicator)}
+                </button> }
+                </>
+              )
+            })
             }
-          },
-          plugins: {
-            title: {
-              display: true,
-              text: table.title,
-            },
-            legend: {
-              position: 'top',
-              align: 'start',
-            },
-            subtitle: {
-              display: true,
-              position: 'bottom',
-              text: 'gráficos dispostos em porcentagem (%)'
-            },
-            tooltip: {
-              callbacks: {
-                footer: footer,
+          </DataOrganizer>
+          {table.categories.subcategories &&
+          <DataOrganizer>
+            <p>Porcentagem da variável:</p>
+            
+              <div>
+              {uniqueVariables(Object.values(table.subcategories)).map((variable:string) => {
+                return (
+                  <button key={variable} onClick={() => {setVariable(variable)}}>
+                    {variable}
+                  </button>
+                )
+              })
               }
-            }
-          },
-        }}
-        data={{
-        labels: labels,
-        datasets: dataset,
-        }}
-      />
-      {Object.keys(table.indicators).map((indicator: string) => {
-        return (
-          <>
-          {buttonIndicators.includes(indicator) && 
-          <button key={indicator} onClick={() => {
-            handleClick(indicator);
-          }}>
-           {capitalize(indicator)}
-         </button> }
-          </>
-        )
-      })
-      }
-      {table.categories.subcategories &&
-        <div>
-        {uniqueVariables(Object.values(table.subcategories)).map((variable:string) => {
-          return (
-            <button key={variable} onClick={() => {setVariable(variable)}}>
-              {variable}
-            </button>
-          )
-        })
-        }
-      </div>
-      }
+            </div>
+          </DataOrganizer>
+          }
+        </DataContainer>
+
       
-      
-      </>
+      </Container>
+    </>
   );
 };
