@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { mapeamentoCETIC } from 'utils/mapping';
 import { BarChart } from './components/Bar';
-import { Container } from './global/styles';
+import { Button } from './components/Button'
+import { Container, CategorySelection } from './global/styles';
 
 function App() {
   const [dataset, setDataset] = useState<Object | null>(null);
@@ -10,6 +11,7 @@ function App() {
   const [year, setYear] = useState<Number>(2019);
   const [tableset, setTableset] = useState<String | null>(null);
   const [response, setResponse] = useState<Object | null>(null);
+  const [categorySelection, setCategorySelection] = useState<any | null>(null);
 
   useEffect(() => {
     if(response){
@@ -60,15 +62,19 @@ function App() {
         <button onClick={() => {setYear(2017)}}>2017</button>
         <button onClick={() => {setYear(2018)}}>2018</button>
         <button onClick={() => {setYear(2019)}}>2019</button>
-        <br/>
-        {Object.keys(mapeamentoCETIC).map((type: any) => (
-        <button onClick={() => {
-          setTableset(type);
-          handleClick(mapeamentoCETIC[type as keyof typeof mapeamentoCETIC]);
-        }}>
-          {type}
-        </button>
-        ))}
+        <CategorySelection>
+          {Object.keys(mapeamentoCETIC).map((type: any) => (
+            <Button display="round" onClick={() => {
+              setCategorySelection(type);
+              setTableset(type);
+              handleClick(mapeamentoCETIC[type as keyof typeof mapeamentoCETIC]);
+            }} 
+            selected={categorySelection === type} 
+            >
+              {type}
+            </Button>
+          ))}
+        </CategorySelection>
         {category && 
         Object.keys(category).map((key: string) => {
           const selected = category[key as keyof typeof category];

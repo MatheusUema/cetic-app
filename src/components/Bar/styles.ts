@@ -8,10 +8,9 @@ export const Container = styled.div`
     border-radius: 1rem;
     font-family: Arial, Helvetica, sans-serif;
     box-shadow: 5px 5px 4px 5px rgba(129,129,129,0.55);
-
+    max-width: 800px;
     
-    margin: 0 5%;
-
+    margin: 0 auto;
     & + & {
         margin-top: 2rem;
     }
@@ -29,5 +28,6 @@ export const DataContainer = styled.div`
 export const DataOrganizer = styled.div`
     display: flex;
     align-items: center;
+    text-align: left;
 
 `;
