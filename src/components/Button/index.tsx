@@ -5,6 +5,7 @@ import { Container, Loader } from './styles';
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     display?: 'round' | 'square';
     selected: boolean;
+    color?: string;
     onClick?: () => void;
     children: React.ReactNode;
     className?: string;
@@ -12,7 +13,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 
 export const Button = ({
-    display = 'square', selected, onClick, children, className, ...rest
+    display = 'square', selected, onClick, children, className, color, ...rest
      }: ButtonProps): JSX.Element => {
     const [dataset, setDataset] = useState<any | null>(null);
 
@@ -23,6 +24,7 @@ export const Button = ({
         display={display}
         selected={selected}
         onClick={onClick}
+        color={color}
        >
             <p>{children}</p>
        </Container>

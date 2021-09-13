@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 interface ButtonContainerProps {
     display: 'round' | 'square';
     selected: boolean;
+    color?: string;
   }
   
 
@@ -19,7 +20,8 @@ export const Container = styled.button<ButtonContainerProps>`
         font-size: .7rem;
     }
 
-    background-color: ${(props) => props.selected  ? '#1B8AB2' : '#82C5DE'};
+    background-color: ${(props) => props.color ? props.color : '#1B8AB2'};
+    opacity: ${(props) => props.selected ? 1 : 0.6};
 
     & + & {
         margin-left: 10px;

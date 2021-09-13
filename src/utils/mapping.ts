@@ -485,15 +485,7 @@ export const mapeamentoCETIC = {
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
-            name: 'escolasUrbanasEscolas_D10B',
-            indicators: []
-        },
-        {
             name: 'escolasUrbanasEscolas_D21A',
-            indicators: []
-        },
-        {
-            name: 'escolasUrbanasEscolas_D22',
             indicators: []
         },
         {
@@ -502,10 +494,35 @@ export const mapeamentoCETIC = {
         },
     ],
     'Eixo Conteúdos e Recursos Digitais': [
+        
+        {
+            name: 'escolasUrbanasProfessores_G1',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasProfessores_G2',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasProfessores_G2B1',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasEscolas_D10B',
+            indicators: []
+        },
+        {
+            name: 'escolasUrbanasEscolas_D22',
+            indicators: []
+        },
+    ],
+    'Eixo Utilização de Tecnologia - Aluno': [
         {
             name: 'escolasUrbanasAlunos_E1A',
             indicators: ['SEXO', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA']
         },
+    ],
+    'Eixo Utilização de Tecnologia - Professor': [
         {
             name: 'escolasUrbanasProfessores_E2A',
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
@@ -523,22 +540,6 @@ export const mapeamentoCETIC = {
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
-            name: 'escolasUrbanasProfessores_G1',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
-            name: 'escolasUrbanasProfessores_G2',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
-            name: 'escolasUrbanasProfessores_G2B1',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
-            name: 'escolasUrbanasProfessores_G5',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
             name: 'escolasUrbanasProfessores_G8A',
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
@@ -551,6 +552,26 @@ export const mapeamentoCETIC = {
         {
             name: 'escolasUrbanasAlunos_C6',
             indicators: ['SEXO', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA']
+        },
+        {
+            name: 'escolasUrbanasAlunos_D1',
+            indicators: ['SEXO', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA']
+        },
+        {
+            name: 'escolasUrbanasProfessores_D1A',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasProfessores_D2',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasProfessores_D6A',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
+            name: 'escolasUrbanasProfessores_D6B',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
             name: 'escolasUrbanasProfessores_F2',
@@ -573,6 +594,10 @@ export const mapeamentoCETIC = {
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
+            name: 'escolasUrbanasProfessores_G5',
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+        },
+        {
             name: 'escolasUrbanasProfessores_G12',
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
@@ -581,23 +606,11 @@ export const mapeamentoCETIC = {
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
-            name: 'escolasUrbanasCoordenadores_C3',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
             name: 'escolasUrbanasCoordenadores_C5A',
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
             name: 'escolasUrbanasCoordenadores_C7A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
-            name: 'escolasUrbanasCoordenadores_C16',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
-            name: 'escolasUrbanasCoordenadores_C17',
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
@@ -630,28 +643,13 @@ export const mapeamentoCETIC = {
         },
     ],
    'Eixo Competência': [
-        {
-            name: 'escolasUrbanasAlunos_D1',
-            indicators: ['SEXO', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA']
-        },
-        {
-            name: 'escolasUrbanasProfessores_D1A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
-            name: 'escolasUrbanasProfessores_D2',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
+
         {
             name: 'escolasUrbanasProfessores_D2A',
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {
-            name: 'escolasUrbanasProfessores_D6A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
-        },
-        {
-            name: 'escolasUrbanasProfessores_D6B',
+            name: 'escolasUrbanasCoordenadores_C3',
             indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
         },
         {

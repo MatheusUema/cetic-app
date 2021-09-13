@@ -3,16 +3,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Title, Container, DataContainer, DataOrganizer } from './styles';
 import { capitalize, dataPercentage, uniqueVariables, selectIndicators } from '../../utils/functions';
-import { colors } from '../../utils/colors';
+// import { colors } from '../../utils/colors';
 
 interface BarProps {
     table: any;
     chosenIndicators: Array<string>;
+    colors: Array<String>;
 }
 
 
 export const BarChart = ({
-    table, chosenIndicators
+    table, chosenIndicators, colors
      }: BarProps): JSX.Element => {
     const [dataset, setDataset] = useState<any | null>(null);
     const [labels, setLabels] = useState<Array<string> | null>(null);
