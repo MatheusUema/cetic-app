@@ -111,7 +111,9 @@ function App() {
           const selectedKeys = Object.keys(selected)
           const table = selected[selectedKeys[0] as keyof typeof selected]
           const chosenIndicators = selected[selectedKeys[1] as keyof typeof selected]
-
+          if(index === Object.keys(category).length - 1){
+            console.log('ultimo')
+          }
           return (
             <BarChart table={table} chosenIndicators={chosenIndicators} colors={colors} />
           )
