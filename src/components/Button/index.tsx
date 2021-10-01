@@ -1,6 +1,6 @@
-import React, { useState,ButtonHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
-import { Container, Loader } from './styles';
+import { Container } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     display?: 'round' | 'square';
@@ -15,8 +15,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = ({
     display = 'square', selected, onClick, children, className, color, ...rest
      }: ButtonProps): JSX.Element => {
-    const [dataset, setDataset] = useState<any | null>(null);
-
     return (
        <Container
         {...rest}
