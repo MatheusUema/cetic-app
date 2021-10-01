@@ -6,7 +6,6 @@ import { BarChart } from './components/Bar';
 import { Button } from './components/Button'
 import { Container, CategorySelection } from './global/styles';
 import { colorsPalette } from './utils/colors';
-import { act } from 'react-dom/test-utils';
 
 function App() {
   const [dataset, setDataset] = useState<Object | null>(null);
