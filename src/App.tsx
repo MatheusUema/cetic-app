@@ -70,16 +70,24 @@ function App() {
   return (
     <div >
       <Container>
-        <h1>Mapeamento CETIC</h1>
+        {mapeamento === mapeamentoCETIC ?
+          <h1>Mapeamento CETIC - 2019</h1>
+          :
+          <h1>Mapeamento CETIC </h1>
+        }
         <p className="description">
         Realizada desde 2010, a pesquisa entrevista a comunidade escolar (alunos, professores, coordenadores pedagógicos e diretores) para mapear o acesso, o uso e a apropriação das tecnologias de informação e comunicação (TIC) em escolas públicas e privadas de educação básica.
         </p>
-        <p>
-          Anos disponíveis:
-        </p>
-        <button onClick={() => {setYear(2017)}}>2017</button>
-        <button onClick={() => {setYear(2018)}}>2018</button>
-        <button onClick={() => {setYear(2019)}}>2019</button>
+        {mapeamento === mapeamentoTCC && 
+        <>
+          <p>
+            Anos disponíveis:
+          </p>
+          <button onClick={() => {setYear(2017)}}>2017</button>
+          <button onClick={() => {setYear(2018)}}>2018</button>
+          <button onClick={() => {setYear(2019)}}>2019</button>
+        </>
+        }
         <CategorySelection>
           {Object.keys(mapeamento).map((type: any) => (
             <Button display="round"
@@ -95,11 +103,13 @@ function App() {
           ))}
         </CategorySelection>
         {category && 
-        Object.keys(category).map((key: string) => {
+        Object.keys(category).map((key: string, index: number) => {
           const selected = category[key as keyof typeof category];
           const selectedKeys = Object.keys(selected)
           const table = selected[selectedKeys[0] as keyof typeof selected]
           const chosenIndicators = selected[selectedKeys[1] as keyof typeof selected]
+
+          console.log(index)
           return (
             <BarChart table={table} chosenIndicators={chosenIndicators} colors={colors} />
           )
