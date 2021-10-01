@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const cors = require('cors')
 const XLSX = require('xlsx');
 
@@ -74,7 +75,12 @@ app.get('/getAllData', (req, res) => {
     //Por enquanto vamos enviar apenas o object do ano de 2019
   }
   // res.send(object);
+  // console.log(allData)
+  // fs.writeFileSync(path.resolve(__dirname, 'allData.json'), JSON.stringify(allData));
+  console.log('enviando dados')
   res.send(allData);
+
+
 });
 
 const convertToJson = (path) => {
@@ -89,7 +95,7 @@ const convertToJson = (path) => {
     const tableName = tableKey[0].split(' ')[4];
     object[tableName] = data;
   }
-  console.log(object);
+  // console.log(object);
   return object;
 }
 

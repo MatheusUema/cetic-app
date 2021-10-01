@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import axios from "axios";
-import { mapeamentoCETIC } from 'utils/mapping';
+import data from './files/allData.json';
+import { mapeamentoCETIC, mapeamentoTCC } from 'utils/mapping';
 import { BarChart } from './components/Bar';
 import { Button } from './components/Button'
 import { Container, CategorySelection } from './global/styles';
@@ -15,20 +15,18 @@ function App() {
   const [response, setResponse] = useState<Object | null>(null);
   const [categorySelection, setCategorySelection] = useState<any | null>(null);
   const [colors, setColors] = useState<Array<String>>(colorsPalette[0]);
+  const [mapeamento, setMapeamento] = useState<any>(window.location.pathname.includes('tcc') ? mapeamentoTCC : mapeamentoCETIC );
 
   useEffect(() => {
     if(response){
       setDataset(response[year as keyof typeof dataset]);
       console.log('mudando para ano '+ year);
       if(tableset) {
-        handleClick(mapeamentoCETIC[tableset as keyof typeof mapeamentoCETIC]);
+        handleClick(mapeamento[tableset as keyof typeof mapeamento]);
       }
     } else {
-      axios.get('http://localhost:5000/getAllData').then((response) => {
-        console.log(response.data);
-        setDataset(response.data[year as keyof typeof dataset]);
-        setResponse(response.data);
-      });
+      setDataset(data[year as keyof typeof dataset])
+      setResponse(data)
     }
   }, [year]);
 
@@ -38,7 +36,7 @@ function App() {
 
   const handleColors = () => {
     if(tableset){
-      setColors(colorsPalette[Object.keys(mapeamentoCETIC).indexOf(tableset?.toString())])
+      setColors(colorsPalette[Object.keys(mapeamento).indexOf(tableset?.toString())])
     }
   }
 
@@ -46,7 +44,7 @@ function App() {
     handleColors();
   }, [handleColors, tableset])
 
-  const  handleClick = async (selectedTables:Array<typeof mapeamentoCETIC['Eixo Infraestrutura'][0]>) => {
+  const  handleClick = async (selectedTables:Array<typeof mapeamento[0][0]>) => {
     await clearTables();
     for(const key in selectedTables){
       let activeTables = {};
@@ -82,12 +80,12 @@ function App() {
         <button onClick={() => {setYear(2018)}}>2018</button>
         <button onClick={() => {setYear(2019)}}>2019</button>
         <CategorySelection>
-          {Object.keys(mapeamentoCETIC).map((type: any) => (
+          {Object.keys(mapeamento).map((type: any) => (
             <Button display="round"
             color={colors[0].toString()} onClick={() => {
               setCategorySelection(type);
               setTableset(type);
-              handleClick(mapeamentoCETIC[type as keyof typeof mapeamentoCETIC]);
+              handleClick(mapeamento[type as keyof typeof mapeamento]);
             }} 
             selected={categorySelection === type} 
             >
