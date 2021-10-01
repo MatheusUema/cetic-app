@@ -15,6 +15,7 @@ function App() {
   const [response, setResponse] = useState<Object | null>(null);
   const [categorySelection, setCategorySelection] = useState<any | null>(null);
   const [colors, setColors] = useState<Array<String>>(colorsPalette[0]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mapeamento, setMapeamento] = useState<any>(window.location.pathname.includes('tcc') ? mapeamentoTCC : mapeamentoCETIC );
 
   useEffect(() => {

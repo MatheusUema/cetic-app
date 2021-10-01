@@ -717,6 +717,7 @@ export const mapeamentoCETIC = {
     
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const categories = {
     urbanas: ['escolas', 'alunos', 'professores', 'diretores', 'coordenadores'],
     rurais: ['alunos', 'diretores'] //tem que ver isso aqui

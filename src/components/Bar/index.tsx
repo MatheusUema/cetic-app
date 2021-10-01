@@ -18,6 +18,7 @@ export const BarChart = ({
     const [dataset, setDataset] = useState<any | null>(null);
     const [labels, setLabels] = useState<Array<string> | null>(null);
     const [variable, setVariable] = useState<string>(table.subcategories ? (uniqueVariables(Object.values(table.subcategories))[0]) : '');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [stacked, setStacked] = useState<boolean>(!table.categories.subcategories);
     const [buttonIndicators, setButtonIndicators] = useState<Array<string>>(['']);
     const [shownIndicator, setShownIndicator] = useState<String>('REGIÃO');
@@ -41,6 +42,7 @@ export const BarChart = ({
         i++;
       }
       setDataset(dataset);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [variable, table])
     
     useEffect(() => {
