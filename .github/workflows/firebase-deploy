@@ -1,5 +1,9 @@
 name: Firebase Deploy
 
+environment:
+  name: cetic-main
+  url: https://cetic-af097.web.app/
+
 on:
   push:
     branches: 
