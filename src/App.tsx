@@ -6,6 +6,7 @@ import { BarChart } from './components/Bar';
 import { Button } from './components/Button'
 import { Container, CategorySelection } from './global/styles';
 import { colorsPalette } from './utils/colors';
+import { act } from 'react-dom/test-utils';
 
 function App() {
   const [dataset, setDataset] = useState<Object | null>(null);
@@ -45,8 +46,10 @@ function App() {
     handleColors();
   }, [handleColors, tableset])
 
+
   const  handleClick = async (selectedTables:Array<typeof mapeamento[0][0]>) => {
     await clearTables();
+    let categoriesTables = {};
     for(const key in selectedTables){
       let activeTables = {};
       const position = selectedTables[key]!.name.split('_');
@@ -59,13 +62,13 @@ function App() {
           table: thisTable,
           indicators: chosenIndicators
         }
-        // eslint-disable-next-line no-loop-func
-        setCategory(category => ({
-          ...category,
-          [key]: activeTables
-        }));
+        categoriesTables = {
+          ...categoriesTables,
+          [key]: activeTables,
+        }
       }
     }
+    setCategory(categoriesTables);
   }
   return (
     <div >
@@ -109,7 +112,6 @@ function App() {
           const table = selected[selectedKeys[0] as keyof typeof selected]
           const chosenIndicators = selected[selectedKeys[1] as keyof typeof selected]
 
-          console.log(index)
           return (
             <BarChart table={table} chosenIndicators={chosenIndicators} colors={colors} />
           )
