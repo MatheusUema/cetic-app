@@ -78,7 +78,7 @@ function App() {
           <h1>Mapeamento CETIC </h1>
         }
         <p className="description">
-        Realizada desde 2010, a pesquisa entrevista a comunidade escolar (alunos, professores, coordenadores pedagógicos e diretores) para mapear o acesso, o uso e a apropriação das tecnologias de informação e comunicação (TIC) em escolas públicas e privadas de educação básica.
+        A pesquisa entrevista a comunidade escolar (alunos, professores, coordenadores pedagógicos e diretores) para mapear o acesso, o uso e a apropriação das tecnologias de informação e comunicação (TIC) em escolas públicas e privadas de educação básica.
         </p>
         {mapeamento === mapeamentoTCC && 
         <>
