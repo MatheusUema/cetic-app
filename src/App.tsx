@@ -19,6 +19,7 @@ function App() {
   const [mapeamento, setMapeamento] = useState<any>(window.location.pathname.includes('tcc') ? mapeamentoTCC : mapeamentoCETIC );
 
   useEffect(() => {
+    console.log(data)
     if(response){
       setDataset(response[year as keyof typeof dataset]);
       console.log('mudando para ano '+ year);

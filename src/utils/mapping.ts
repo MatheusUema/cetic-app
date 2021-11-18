@@ -95,94 +95,94 @@ export const mapeamentoTCC = {
         },
         {
             name: 'escolasUrbanasProfessores_D1A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_D2',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_D6A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_D6B',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_F2',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_F3',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA']
         },
         {
             name: 'escolasUrbanasProfessores_F4',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_F5',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_F6',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_G5',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasProfessores_G12',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasCoordenadores_C1A1',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasCoordenadores_C5A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasCoordenadores_C7A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasCoordenadores_D1',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasCoordenadores_D3',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasCoordenadores_D3A1',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasDiretores_C4A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasDiretores_D24A1',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasDiretores_E2',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
         {
             name: 'escolasUrbanasDiretores_E3',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA', ]
         },
     ],
    'Eixo Competência': [
 
         {
             name: 'escolasUrbanasProfessores_D2A',
-            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO']
+            indicators: ['SEXO', 'FAIXA ETÁRIA', 'REGIÃO', 'DEPENDÊNCIA ADMINISTRATIVA',]
         },
         {
             name: 'escolasUrbanasCoordenadores_C3',
