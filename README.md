@@ -1,8 +1,8 @@
 # Impact of Covid-19 on Education in Brazil
 ## Software created with React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Project available on: https://cetic-af097.web.app/ 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). \
+Project available on: https://cetic-af097.web.app/ \
 The academic research in available as well on the pdf file from the repository
 
 ## Available Scripts
